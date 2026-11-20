@@ -1,76 +1,101 @@
-# Clivet ELFOFresh EVO - Integrazione Home Assistant
+# Clivet ELFOFresh EVO - Home Assistant Integration
 
-[![Aggiungi repository a Home Assistant](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=carlettodp&repository=clivet_elfofresh_evo&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=carlettodp&repository=clivet_elfofresh_evo&category=integration)
 
-Integrazione personalizzata per monitorare e controllare le unità **Clivet CPAN-YIN (ELFOFresh EVO)** con Home Assistant Core **2026.11.0 o successivo**.
+Custom Home Assistant integration to monitor and control **Clivet CPAN-YIN (ELFOFresh EVO)** active thermodynamic mechanical ventilation (HRV/VMC) units with Home Assistant Core **2026.11.0 or newer**.
 
-## Installazione tramite Home Assistant Marketplace
+---
 
-Puoi aggiungere direttamente questo repository al tuo Home Assistant facendo clic sul pulsante qui sotto:
+## Installation via Home Assistant Marketplace
 
-[![Aggiungi repository a Home Assistant](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=carlettodp&repository=clivet_elfofresh_evo&category=integration)
+You can add this repository to your Home Assistant instance with a single click:
 
-Oppure manualmente dall'interfaccia:
-1. In Home Assistant (Core 2026.11 o successivo), vai su **Impostazioni → Marketplace**.
-2. Fai clic sul menu in alto a destra (**...**) e seleziona **Repository personalizzati**.
-3. Inserisci l'URL del repository: `https://github.com/carlettodp/clivet_elfofresh_evo`
-4. Seleziona la categoria **Integrazione** e premi **Aggiungi**.
-5. Cerca **Clivet ELFOFresh EVO**, premi **Scarica** e riavvia Home Assistant.
-6. Vai in **Impostazioni → Dispositivi e servizi → Aggiungi integrazione** e seleziona **Clivet ELFOFresh EVO**.
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=carlettodp&repository=clivet_elfofresh_evo&category=integration)
 
-## Installazione manuale
+### Manual UI Method:
+1. In Home Assistant (Core 2026.11 or newer), navigate to **Settings → Marketplace**.
+2. Click the top-right menu (**...**) and select **Custom repositories**.
+3. Enter the repository URL: `https://github.com/carlettodp/clivet_elfofresh_evo`
+4. Select category **Integration** and click **Add**.
+5. Find **Clivet ELFOFresh EVO**, click **Download**, and restart Home Assistant.
+6. Go to **Settings → Devices & Services → Add Integration** and select **Clivet ELFOFresh EVO**.
 
-1. Apri la cartella di configurazione di Home Assistant, quella che contiene `configuration.yaml`.
-2. Copia la cartella `custom_components/clivet_elfofresh_evo` del progetto nella sottocartella `custom_components` di Home Assistant. Al termine devi trovare `custom_components/clivet_elfofresh_evo/manifest.json` accanto agli altri file dell’integrazione.
-3. Riavvia Home Assistant.
-4. Alla prima installazione apri **Impostazioni → Dispositivi e servizi → Aggiungi integrazione → Clivet ELFOFresh EVO**. Seleziona il tipo di connessione e inserisci i dati del gateway o della porta seriale e l’indirizzo Modbus della VMC.
+---
 
-## Aggiornare un impianto già configurato
+## Manual Installation
 
-Per aggiornare il codice, sovrascrivi i file nella cartella `custom_components/clivet_elfofresh_evo` già installata e riavvia Home Assistant. Mantieni la voce Clivet ELFOFresh EVO esistente: è quella a cui sono associati dispositivo, entità, automazioni e contatore Energia.
+1. Open your Home Assistant configuration directory (where `configuration.yaml` is located).
+2. Copy the `custom_components/clivet_elfofresh_evo` folder into your `custom_components` directory (so that `custom_components/clivet_elfofresh_evo/manifest.json` is present).
+3. Restart Home Assistant.
+4. Navigate to **Settings → Devices & Services → Add Integration → Clivet ELFOFresh EVO**. Select your connection type and enter your gateway IP or serial port along with the Modbus Slave ID.
 
-Se cambia l’indirizzo del gateway, la porta o il tipo di collegamento della stessa VMC, apri il menu della **voce esistente → Riconfigura** in **Impostazioni → Dispositivi e servizi → Clivet ELFOFresh EVO**. Per cambiare la frequenza di lettura usa **Configura**.
+---
 
-## Caratteristiche
+## Updating an Existing Installation
 
-- **Configurazione grafica (Config Flow)**: Configura la connessione direttamente dall'interfaccia di Home Assistant senza dover modificare `configuration.yaml`.
-- **Supporto Modbus flessibile**:
-  - Modbus RTU over TCP (gateway Ethernet/Wi-Fi come Elfin EW11 o Waveshare)
-  - Modbus TCP nativo
-  - Modbus RTU seriale (tramite adattatore USB RS-485)
-- **Lettura a blocchi ottimizzata**: I registri vengono letti in soli 3 blocchi sequenziali per garantire velocità ed evitare timeout sulla linea RS-485.
-- **Risoluzione bitmask diagnostica**: I registri 124 e 125 vengono decodificati automaticamente in entità binarie native.
+To update the integration code, overwrite the files in your `custom_components/clivet_elfofresh_evo` directory and restart Home Assistant. Keep your existing Clivet ELFOFresh EVO config entry: your device, entities, automations, and Energy dashboard history are preserved.
 
-## Entità supportate
+If your gateway IP address, port, or serial adapter path changes, open the integration card in **Settings → Devices & Services → Clivet ELFOFresh EVO**, click the menu and choose **Reconfigure**. To change polling frequency, click **Configure**.
 
-### Clima (`climate`)
-- Modalità: Spento, Raffrescamento, Riscaldamento, Sola Ventilazione, Automatico
-- Regolazione temperatura target (17 - 28 °C)
-- Visualizzazione temperatura aria ambiente e stato operativo reale (riscaldamento, raffrescamento, sbrinamento, ventilazione)
-- Modalità silenziose (Normale, Silenziosa, Super Silenziosa)
+---
 
-### Ventilazione (`fan`)
-- Controllo percentuale di velocità (livelli 3..7)
-- Feedback in tempo reale su velocità effettiva mandata ed estrazione
+## Key Features
 
-### Sensori (`sensor`)
-- Temperature: ambiente (T1), esterna (T4), mandata (T2, T2B), evaporazione (T3), condensazione (Tc), scarico (Tp), aspirazione (Th)
-- Umidità aria di mandata (RHC)
-- Dati elettrici: tensione (V), corrente assorbita (A) e potenza stimata del compressore (W), calcolata come tensione × corrente × 0,96.
-- Energia stimata compressore (kWh), selezionabile nella dashboard Energia tra i singoli dispositivi. Il contatore accumula la potenza stimata tra letture valide e riprende dal totale salvato dopo un riavvio.
-- Frequenza compressore (Hz), apertura valvola EXV, tempi di funzionamento
-- Codici errore attivo e storico allarmi
+- **UI Config Flow**: Configure and reconfigure network and serial parameters directly from the Home Assistant interface without touching `configuration.yaml`.
+- **Flexible Modbus Transports**:
+  - Modbus RTU over TCP (Ethernet/Wi-Fi gateways such as Waveshare, Elfin EW11, USR-TCP232)
+  - Native Modbus TCP
+  - Modbus RTU Serial (USB RS-485 dongles)
+- **Optimized Block Reading**: Reads all operational, diagnostic, and configuration registers in just 3 sequential blocks to minimize bus traffic and avoid RS-485 timeouts.
+- **Diagnostic Bitmask Decoding**: Automatically decodes registers 124 and 125 into native binary sensors for alarms, dampers, and status indicators.
+- **Calibrated Real-World Power Model**: Accurately estimates real power consumption (W) and accumulated energy (kWh) for both the EC ventilation fans and the DC inverter compressor.
 
-### Sensori Binari (`binary_sensor`)
-- Allarme livello acqua vaschetta condensa
-- Allarme errore di sistema
-- Stato sbrinamento attivo
-- Stato serranda aria aperta/chiusa
-- Stato pompa condensa, valvola a 4 vie e ventilatori
+---
 
-### Selettori e Interruttori (`select` / `switch`)
-- Selezione modalità di deumidificazione (Standard, Bassa, Eco)
-- Selezione modalità silenziosa
-- Selettore diretto livello velocità
-- Interruttore accensione generale, filtro elettrostatico e umidificatore
+## Supported Entities
 
+### Climate (`climate`)
+- Modes: Off, Cool, Heat, Fan Only, Auto
+- Target temperature adjustment (17 °C – 28 °C)
+- Current indoor air temperature and real operating action (Heating, Cooling, Defrosting, Fan, Idle)
+- Silent mode presets: Normal, Silent, Super Silent
+
+### Ventilation (`fan`)
+- Percentage speed control (mapped across native speeds 3 to 7)
+- Real-time feedback for supply and exhaust fan speeds and power status
+
+### Sensors (`sensor`)
+- **Temperatures**: Indoor Air (T1), Outdoor Air (T4), Supply Air (T2, T2B), Evaporation (T3), Condensation (Tc), Discharge (Tp), Suction (Th)
+- **Air Quality & Humidity**: Supply Air Relative Humidity (RHC)
+- **Electrical & Energy**:
+  - Voltage (V) and Current (A)
+  - **Estimated Total Power (W)**: Total instant power drawn by both EC fans, electronics, and the inverter compressor.
+  - **Estimated Compressor Power (W)**: Separate power draw of the compressor stage.
+  - **Estimated Total Energy (kWh)**: Continuous energy counter ready for individual device tracking in the **Home Assistant Energy Dashboard**.
+  - **Estimated Compressor Energy (kWh)**: Dedicated energy counter for the compressor.
+- **Operational & Diagnostics**: Compressor Frequency (Hz), EXV Valve Opening (steps), Compressor Runtime, Active Error Code, Error History (1–3), Software Versions (Main / HMI)
+
+### Binary Sensors (`binary_sensor`)
+- Condensate water level alarm
+- System error status
+- Active defrosting
+- Fresh air motorized damper open/closed
+- Condensate pump running
+- 4-way reversing valve active
+- Supply and exhaust fan power status
+- Electrostatic filter active
+- Auxiliary electric heater active
+
+### Selectors & Switches (`select` / `switch`)
+- Dehumidification mode selector (Standard, Low, Eco)
+- Silent mode selector (Off, Silent, Super Silent)
+- Target fan speed level selector (Levels 3–7)
+- Main unit power switch
+- Electrostatic filter enable switch
+- Humidifier enable switch
+
+---
+
+## License
+
+This project is licensed under the Apache 2.0 License.
