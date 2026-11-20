@@ -1,0 +1,16 @@
+{
+  "domain": "clivet_elfofresh_evo",
+  "name": "Clivet ELFOFresh EVO",
+  "codeowners": [
+    "@carlettodp"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/carlettodp/clivet_elfofresh_evo",
+  "issue_tracker": "https://github.com/carlettodp/clivet_elfofresh_evo/issues",
+  "iot_class": "local_polling",
+  "requirements": [
+    "pymodbus[serial]>=3.13.1,<4"
+  ],
+  "version": "0.9.0b1",
+  "integration_type": "device"
+}

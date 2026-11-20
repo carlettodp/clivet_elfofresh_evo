@@ -1,0 +1,235 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Clivet ELFOFresh EVO Connection",
+        "description": "Select the connection type to communicate with your Clivet ELFOFresh EVO unit.",
+        "data": {
+          "connection_type": "Connection Type"
+        }
+      },
+      "network": {
+        "title": "Network Modbus Configuration",
+        "description": "Configure your Modbus gateway (e.g. Waveshare, Elfin EW11, or Modbus TCP server).",
+        "data": {
+          "host": "Host / IP Address",
+          "port": "Port",
+          "slave_id": "Modbus Slave ID",
+          "scan_interval": "Update Interval (seconds)"
+        }
+      },
+      "serial": {
+        "title": "Serial Modbus Configuration",
+        "description": "Configure direct RS-485 USB adapter parameters.",
+        "data": {
+          "serial_port": "Serial Port (e.g. /dev/ttyUSB0 or COM3)",
+          "baudrate": "Baud Rate",
+          "slave_id": "Modbus Slave ID",
+          "scan_interval": "Update Interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not open the connection. Check the gateway address and port or the serial port path.",
+      "unknown": "An unexpected error occurred.",
+      "cannot_read_registers": "The connection opened, but the VMC registers could not be read. Check the protocol, Modbus address and RS-485 connection."
+    },
+    "abort": {
+      "already_configured": "This Clivet ELFOFresh EVO device is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Clivet ELFOFresh EVO Options",
+        "description": "Adjust polling parameters.",
+        "data": {
+          "scan_interval": "Update Interval (seconds)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "climate": {
+      "vmc": {
+        "state_attributes": {
+          "preset_mode": {
+            "name": "Silent Mode",
+            "state": {
+              "normal": "Off / Normal",
+              "silent": "Silent",
+              "super_silent": "Super Silent"
+            }
+          }
+        }
+      }
+    },
+    "fan": {
+      "ventilation": {
+        "name": "Ventilation"
+      }
+    },
+    "switch": {
+      "power": {
+        "name": "Power"
+      },
+      "enable_e_filter": {
+        "name": "Enable Electrostatic Filter"
+      },
+      "enable_humidifier": {
+        "name": "Enable Humidifier"
+      }
+    },
+    "select": {
+      "silent_mode": {
+        "name": "Silent Mode",
+        "state": {
+          "off": "Off / Normal",
+          "silent": "Silent",
+          "super_silent": "Super Silent"
+        }
+      },
+      "dehumidification_mode": {
+        "name": "Dehumidification Mode",
+        "state": {
+          "standard": "Standard",
+          "low": "Low",
+          "eco": "Eco"
+        }
+      },
+      "target_fan_speed_select": {
+        "name": "Target Fan Speed"
+      }
+    },
+    "sensor": {
+      "indoor_air_temp": {
+        "name": "Indoor Air Temperature (T1)"
+      },
+      "outdoor_air_temp": {
+        "name": "Outdoor Air Temperature (T4)"
+      },
+      "supply_air_temp": {
+        "name": "Supply Air Temperature (T2)"
+      },
+      "second_supply_temp": {
+        "name": "Second Supply Air Temperature (T2B)"
+      },
+      "condensation_temp": {
+        "name": "Condensation Temperature (Tc)"
+      },
+      "evaporation_temp": {
+        "name": "Evaporation Temperature (T3)"
+      },
+      "discharge_temp": {
+        "name": "Discharge Temperature (Tp)"
+      },
+      "suction_temp": {
+        "name": "Suction Temperature (Th)"
+      },
+      "supply_air_humidity": {
+        "name": "Supply Air Humidity (RHC)"
+      },
+      "current": {
+        "name": "Current"
+      },
+      "voltage": {
+        "name": "Voltage"
+      },
+      "estimated_compressor_energy": {
+        "name": "Estimated compressor energy"
+      },
+      "estimated_compressor_power": {
+        "name": "Estimated compressor power"
+      },
+      "compressor_rps": {
+        "name": "Compressor Frequency"
+      },
+      "exv_opening": {
+        "name": "EXV Valve Opening"
+      },
+      "supply_fan_speed_raw": {
+        "name": "Supply Fan Speed Level"
+      },
+      "exhaust_fan_speed": {
+        "name": "Exhaust Fan Speed Level"
+      },
+      "compressor_time": {
+        "name": "Compressor Run/Stop Duration"
+      },
+      "eheater_output": {
+        "name": "Auxiliary Heater Output"
+      },
+      "current_error": {
+        "name": "Current Error Code"
+      },
+      "history_error_1": {
+        "name": "History Error 1"
+      },
+      "history_error_2": {
+        "name": "History Error 2"
+      },
+      "history_error_3": {
+        "name": "History Error 3"
+      },
+      "unit_size": {
+        "name": "Unit Size"
+      },
+      "main_sw_version": {
+        "name": "Main Software Version"
+      },
+      "hmi_sw_version": {
+        "name": "HMI Software Version"
+      }
+    },
+    "binary_sensor": {
+      "defrost_active": {
+        "name": "Defrosting Active"
+      },
+      "silent_active": {
+        "name": "Silent Mode Active"
+      },
+      "oil_return": {
+        "name": "Oil Return Active"
+      },
+      "remote_on_off": {
+        "name": "Remote ON/OFF Signal"
+      },
+      "water_level_alarm": {
+        "name": "Condensate Water Level Alarm"
+      },
+      "damper_open": {
+        "name": "Fresh Air Damper"
+      },
+      "humidifier_on": {
+        "name": "Humidifier Status"
+      },
+      "e_filter_active": {
+        "name": "Electrostatic Filter Running"
+      },
+      "water_pump_active": {
+        "name": "Condensate Pump Running"
+      },
+      "humidifier_active": {
+        "name": "Humidifier Output"
+      },
+      "valve_4way_active": {
+        "name": "4-Way Reversing Valve"
+      },
+      "exhaust_fan_power": {
+        "name": "Exhaust Fan Power"
+      },
+      "supply_fan_power": {
+        "name": "Supply Fan Power"
+      },
+      "system_error": {
+        "name": "System Error"
+      },
+      "unit_on_index": {
+        "name": "Unit Running"
+      },
+      "e_heater_active": {
+        "name": "Auxiliary Electric Heater Running"
+      }
+    }
+  }
+}

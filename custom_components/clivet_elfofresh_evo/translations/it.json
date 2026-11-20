@@ -1,0 +1,235 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connessione Clivet ELFOFresh EVO",
+        "description": "Seleziona il tipo di connessione utilizzato per comunicare con la VMC Clivet ELFOFresh EVO.",
+        "data": {
+          "connection_type": "Tipo di Connessione"
+        }
+      },
+      "network": {
+        "title": "Configurazione Modbus di Rete",
+        "description": "Configura i parametri del gateway Modbus (es. Waveshare, Elfin EW11 o server Modbus TCP).",
+        "data": {
+          "host": "Host / Indirizzo IP",
+          "port": "Porta",
+          "slave_id": "Modbus Slave ID",
+          "scan_interval": "Intervallo di aggiornamento (secondi)"
+        }
+      },
+      "serial": {
+        "title": "Configurazione Modbus Seriale",
+        "description": "Configura i parametri per adattatore diretto RS-485 USB.",
+        "data": {
+          "serial_port": "Porta Seriale (es. /dev/ttyUSB0 o COM3)",
+          "baudrate": "Baud Rate",
+          "slave_id": "Modbus Slave ID",
+          "scan_interval": "Intervallo di aggiornamento (secondi)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossibile aprire la connessione. Verifica indirizzo e porta del gateway o il percorso della porta seriale.",
+      "unknown": "Si è verificato un errore imprevisto.",
+      "cannot_read_registers": "Connessione aperta, ma la lettura dei registri VMC è fallita. Verifica protocollo, indirizzo Modbus e collegamento RS-485."
+    },
+    "abort": {
+      "already_configured": "Questo dispositivo Clivet ELFOFresh EVO è già configurato."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opzioni Clivet ELFOFresh EVO",
+        "description": "Regola i parametri di polling.",
+        "data": {
+          "scan_interval": "Intervallo di aggiornamento (secondi)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "climate": {
+      "vmc": {
+        "state_attributes": {
+          "preset_mode": {
+            "name": "Modalità Silenziosa",
+            "state": {
+              "normal": "Disattivata / Normale",
+              "silent": "Silenziosa",
+              "super_silent": "Super Silenziosa"
+            }
+          }
+        }
+      }
+    },
+    "fan": {
+      "ventilation": {
+        "name": "Ventilazione"
+      }
+    },
+    "switch": {
+      "power": {
+        "name": "Alimentazione"
+      },
+      "enable_e_filter": {
+        "name": "Abilita Filtro Elettrostatico"
+      },
+      "enable_humidifier": {
+        "name": "Abilita Umidificatore"
+      }
+    },
+    "select": {
+      "silent_mode": {
+        "name": "Modalità Silenziosa",
+        "state": {
+          "off": "Disattivata / Normale",
+          "silent": "Silenziosa",
+          "super_silent": "Super Silenziosa"
+        }
+      },
+      "dehumidification_mode": {
+        "name": "Modalità Deumidificazione",
+        "state": {
+          "standard": "Standard",
+          "low": "Bassa",
+          "eco": "Eco"
+        }
+      },
+      "target_fan_speed_select": {
+        "name": "Velocità Ventilatore Target"
+      }
+    },
+    "sensor": {
+      "indoor_air_temp": {
+        "name": "Temperatura Aria Interna (T1)"
+      },
+      "outdoor_air_temp": {
+        "name": "Temperatura Aria Esterna (T4)"
+      },
+      "supply_air_temp": {
+        "name": "Temperatura Aria di Mandata (T2)"
+      },
+      "second_supply_temp": {
+        "name": "Seconda Temp. Aria di Mandata (T2B)"
+      },
+      "condensation_temp": {
+        "name": "Temperatura di Condensazione (Tc)"
+      },
+      "evaporation_temp": {
+        "name": "Temperatura di Evaporazione (T3)"
+      },
+      "discharge_temp": {
+        "name": "Temperatura di Scarico Compressore (Tp)"
+      },
+      "suction_temp": {
+        "name": "Temperatura di Aspirazione (Th)"
+      },
+      "supply_air_humidity": {
+        "name": "Umidità Aria di Mandata (RHC)"
+      },
+      "current": {
+        "name": "Corrente Assorbita"
+      },
+      "voltage": {
+        "name": "Tensione di Rete"
+      },
+      "estimated_compressor_energy": {
+        "name": "Energia stimata compressore"
+      },
+      "estimated_compressor_power": {
+        "name": "Potenza stimata compressore"
+      },
+      "compressor_rps": {
+        "name": "Frequenza Compressore"
+      },
+      "exv_opening": {
+        "name": "Apertura Valvola EXV"
+      },
+      "supply_fan_speed_raw": {
+        "name": "Livello Ventola Mandata"
+      },
+      "exhaust_fan_speed": {
+        "name": "Livello Ventola Ripresa"
+      },
+      "compressor_time": {
+        "name": "Tempo Marcia/Arresto Compressore"
+      },
+      "eheater_output": {
+        "name": "Potenza Resistenza Ausiliaria"
+      },
+      "current_error": {
+        "name": "Codice Errore Corrente"
+      },
+      "history_error_1": {
+        "name": "Storico Errore 1"
+      },
+      "history_error_2": {
+        "name": "Storico Errore 2"
+      },
+      "history_error_3": {
+        "name": "Storico Errore 3"
+      },
+      "unit_size": {
+        "name": "Taglia Unità"
+      },
+      "main_sw_version": {
+        "name": "Versione Software Main"
+      },
+      "hmi_sw_version": {
+        "name": "Versione Software HMI"
+      }
+    },
+    "binary_sensor": {
+      "defrost_active": {
+        "name": "Sbrinamento Attivo"
+      },
+      "silent_active": {
+        "name": "Modalità Silenziosa Attiva"
+      },
+      "oil_return": {
+        "name": "Rientro Olio Attivo"
+      },
+      "remote_on_off": {
+        "name": "Segnale ON/OFF Remoto"
+      },
+      "water_level_alarm": {
+        "name": "Allarme Livello Acqua Condensa"
+      },
+      "damper_open": {
+        "name": "Serranda Aria Esterna"
+      },
+      "humidifier_on": {
+        "name": "Stato Umidificatore"
+      },
+      "e_filter_active": {
+        "name": "Filtro Elettrostatico in Funzione"
+      },
+      "water_pump_active": {
+        "name": "Pompa Scarico Condensa Attiva"
+      },
+      "humidifier_active": {
+        "name": "Uscita Umidificatore Attiva"
+      },
+      "valve_4way_active": {
+        "name": "Valvola Inversione a 4 Vie"
+      },
+      "exhaust_fan_power": {
+        "name": "Ventola Espulsione Alimentata"
+      },
+      "supply_fan_power": {
+        "name": "Ventola Mandata Alimentata"
+      },
+      "system_error": {
+        "name": "Errore di Sistema"
+      },
+      "unit_on_index": {
+        "name": "Unità in Marcia"
+      },
+      "e_heater_active": {
+        "name": "Resistenza Elettrica Ausiliaria Attiva"
+      }
+    }
+  }
+}
