@@ -6,6 +6,7 @@ import asyncio
 from collections.abc import Mapping
 from datetime import timedelta
 import logging
+from time import monotonic
 from typing import Any
 
 from pymodbus import FramerType
@@ -167,6 +168,22 @@ class ClivetDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.unique_id = entry.entry_id
         self._lock = asyncio.Lock()
         self.client: ModbusClient | None = None
+        self._refresh_task: asyncio.Task | None = None
+        self._write_grace_until: float = 0.0
+
+    def _schedule_refresh(self, delay: float = 2.5) -> None:
+        """Schedule a delayed refresh, debouncing multiple rapid writes."""
+        if self._refresh_task and not self._refresh_task.done():
+            self._refresh_task.cancel()
+        self._refresh_task = self.hass.async_create_task(self._async_delayed_refresh(delay))
+
+    async def _async_delayed_refresh(self, delay: float) -> None:
+        """Wait for the VMC hardware state transition before refreshing registers."""
+        try:
+            await asyncio.sleep(delay)
+            await self.async_request_refresh()
+        except asyncio.CancelledError:
+            pass
 
     async def async_validate_reconfiguration(self, config: Mapping[str, Any]) -> None:
         """Release the live transport while probing, including exclusive serial ports."""
@@ -196,6 +213,7 @@ class ClivetDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
             # Optimistically update cache so Home Assistant UI updates immediately
             if self.data is not None:
+                self._write_grace_until = monotonic() + 4.0
                 if address == REG_POWER:
                     is_on = bool(value & 1)
                     self.data["power"] = is_on
@@ -222,10 +240,9 @@ class ClivetDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             # Small inter-write gap for RS485 line
             await asyncio.sleep(0.05)
 
-        # Trigger background hardware refresh OUTSIDE the lock
+        # Trigger background hardware refresh OUTSIDE the lock with debounced delay
         if refresh:
-            await asyncio.sleep(0.3)
-            await self.async_request_refresh()
+            self._schedule_refresh(delay=2.5)
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Fetch all data from Clivet VMC in 3 optimized block reads."""
@@ -245,6 +262,21 @@ class ClivetDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         reg_1 = block_1[1]  # REG_MODE_SET
         reg_2 = block_1[2]  # REG_TARGET_TEMP
         reg_3 = block_1[3]  # REG_FUNCTIONS_SET
+
+        # Check if we are within the grace window after a recent write command
+        in_write_grace = monotonic() < self._write_grace_until
+
+        power_val = bool(reg_0 & 1)
+        if in_write_grace and self.data and self.data.get("power") and not power_val:
+            power_val = True
+
+        mode_set_val = reg_1
+        if in_write_grace and self.data and "mode_set" in self.data:
+            mode_set_val = self.data["mode_set"]
+
+        target_temp_val = reg_2
+        if in_write_grace and self.data and "target_temp" in self.data:
+            target_temp_val = self.data["target_temp"]
 
         # Parse Block 2 (Addresses 100..128)
         reg_100 = block_2[0]   # REG_COMPRESSOR_RPS
@@ -282,11 +314,15 @@ class ClivetDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         reg_224 = block_3[14]  # REG_ENABLE_E_FILTER (224 - 210 = 14)
         reg_225 = block_3[15]  # REG_ENABLE_HUMIDIFIER (225 - 210 = 15)
 
+        target_fan_speed_val = reg_210
+        if in_write_grace and self.data and "target_fan_speed" in self.data:
+            target_fan_speed_val = self.data["target_fan_speed"]
+
         data = {
             # Commands & Status
-            "power": bool(reg_0 & 1),
-            "mode_set": reg_1,
-            "target_temp": reg_2,
+            "power": power_val,
+            "mode_set": mode_set_val,
+            "target_temp": target_temp_val,
             "functions_set": reg_3,
             "operating_mode": reg_101,
 
@@ -371,6 +407,8 @@ class ClivetDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def async_close(self) -> None:
         """Close the Modbus connection."""
+        if self._refresh_task and not self._refresh_task.done():
+            self._refresh_task.cancel()
         if self.client:
             self.client.close()
             self.client = None

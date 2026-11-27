@@ -135,11 +135,17 @@
       "voltage": {
         "name": "Voltage"
       },
+      "estimated_power": {
+        "name": "Estimated Total Power"
+      },
+      "estimated_energy": {
+        "name": "Estimated Total Energy"
+      },
       "estimated_compressor_energy": {
-        "name": "Estimated compressor energy"
+        "name": "Estimated Compressor Energy"
       },
       "estimated_compressor_power": {
-        "name": "Estimated compressor power"
+        "name": "Estimated Compressor Power"
       },
       "compressor_rps": {
         "name": "Compressor Frequency"

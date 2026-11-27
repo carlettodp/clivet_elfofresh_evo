@@ -135,11 +135,17 @@
       "voltage": {
         "name": "Tensione di Rete"
       },
+      "estimated_power": {
+        "name": "Potenza Totale Stimata"
+      },
+      "estimated_energy": {
+        "name": "Energia Totale Stimata"
+      },
       "estimated_compressor_energy": {
-        "name": "Energia stimata compressore"
+        "name": "Energia Stimata Compressore"
       },
       "estimated_compressor_power": {
-        "name": "Potenza stimata compressore"
+        "name": "Potenza Stimata Compressore"
       },
       "compressor_rps": {
         "name": "Frequenza Compressore"
